@@ -6,11 +6,9 @@ export function recordStart(video) {
   var stream = video.srcObject;
 
   console.log(stream);
-  var options = { mimeType: "video/webm" /* "video/webm; codecs=vp9" */ };
+  var options = { mimeType: "video/webm" };
   mediaRecorder = new MediaRecorder(stream, options);
   mediaRecorder.ondataavailable = handleDataAvailable;
-  // mediaRecorder.onstart = () => id = startTimer();
-  mediaRecorder.onstop = clearTimeout(id);
   mediaRecorder.start();
 }
 
@@ -19,14 +17,14 @@ function handleDataAvailable(event) {
   if (event.data.size > 0) {
     recordedChunks.push(event.data);
     console.log(recordedChunks);
-    download();
+    download(recordedChunks);
   } else {
     // ...
     console.log("handleDataAvailable else")
   }
 }
 
-function download() {
+function download(recordedChunks) {
   var blob = new Blob(recordedChunks, {
     type: "video/webm"
   });
@@ -39,11 +37,3 @@ function download() {
   a.click();
   window.URL.revokeObjectURL(url);
 }
-
-// demo: to download after 9sec
-// function startTimer() {
-//   return setTimeout(event => {
-//     console.log("stopping");
-//     mediaRecorder.stop();
-//   }, 9000);
-// }
