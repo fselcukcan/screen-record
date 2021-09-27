@@ -6,7 +6,7 @@ captureStartButton.addEventListener('click', () => showDisplayMedia(video))
 
 captureStopButton.addEventListener('click', () => stopShowingDisplayMedia(video))
 
-recordStartButton.addEventListener('click', () => recordStart(video))
+recordStartButton.addEventListener('click', () => recordStart(video, {}))
 
 
 async function showDisplayMedia(video) {
