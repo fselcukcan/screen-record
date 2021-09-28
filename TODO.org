@@ -1,0 +1,9 @@
+* TODO remove start/stop: ahev record/stop
+* TODO stop auto saves
+* TODO button states, or one button dn'tM
+
+* TODO persistence: new file system api -> browser storage api
+* TODO list: file system -> browser storage
+** - [] play
+** - [] download (if browser storage)
+** - [] delete

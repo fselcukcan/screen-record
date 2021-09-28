@@ -1,0 +1,4 @@
+* TODO share: over webrtc, ?with a pin?, or better userId on app, searchable
+** - [] share files
+** - [] stream to
+** - [] share live stream
