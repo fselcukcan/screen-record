@@ -2,12 +2,9 @@ var recordedChunks = [];
 var mediaRecorder;
 var id;
 
-export function recordStart(video) {
+export function recordStart(video, { mimeType = "video/webm" }) {
   var stream = video.srcObject;
-
-  console.log(stream);
-  var options = { mimeType: "video/webm" };
-  mediaRecorder = new MediaRecorder(stream, options);
+  mediaRecorder = new MediaRecorder(stream, { mimeType });
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.start();
 }
@@ -17,16 +14,16 @@ function handleDataAvailable(event) {
   if (event.data.size > 0) {
     recordedChunks.push(event.data);
     console.log(recordedChunks);
-    download(recordedChunks);
+    download(recordedChunks, {});
   } else {
     // ...
     console.log("handleDataAvailable else")
   }
 }
 
-function download(recordedChunks) {
+function download(recordedChunks, { mimeType = "video/webm" }) {
   var blob = new Blob(recordedChunks, {
-    type: "video/webm"
+    type: mimeType
   });
   var url = URL.createObjectURL(blob);
   var a = document.createElement("a");
