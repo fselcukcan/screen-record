@@ -1,16 +1,14 @@
-var recordedChunks = [];
-var mediaRecorder;
-var id;
 
 export function recordStart(video, { mimeType = "video/webm" }) {
   var stream = video.srcObject;
-  mediaRecorder = new MediaRecorder(stream, { mimeType });
+  const mediaRecorder = new MediaRecorder(stream, { mimeType });
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.start();
 }
 
 function handleDataAvailable(event) {
   console.log("data-available");
+  let recordedChunks = [];
   if (event.data.size > 0) {
     recordedChunks.push(event.data);
     console.log(recordedChunks);
