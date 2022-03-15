@@ -10,6 +10,7 @@ export function stopDisplayMedia(stream) {
   try {
     const tracks = stream.getTracks()
     tracks.forEach(track => track.stop());
+    return stream
   } catch (error) {
     console.error(error)
   }

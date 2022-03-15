@@ -6,3 +6,7 @@ video {
 :playing {
   border: 2px solid orange;
 }
+
+button#recordStop {
+  display: none;
+}

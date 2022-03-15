@@ -1,24 +1,22 @@
-import { captureStartButton, captureStopButton, video, recordStartButton } from "./gui.js";
+import { recordStartButton, recordStopButton, video } from "./gui.js";
+import { recordStart, recordStop } from "./record.js";
 import { getDisplayMedia, stopDisplayMedia } from "./stream.js";
-import { recordStart } from "./record.js";
+import { showDisplayMedia, stopShowingDisplayMedia } from "./videoplay.js";
 
-captureStartButton.addEventListener('click', () => showDisplayMedia(video))
-
-captureStopButton.addEventListener('click', () => stopShowingDisplayMedia(video))
-
-recordStartButton.addEventListener('click', () => recordStart(video, {}))
-
-
-async function showDisplayMedia(video) {
+recordStartButton.addEventListener('click', async () => {
   const stream = await getDisplayMedia();
-  video.srcObject = stream
-  video.play()
-  return video
-}
+  recordStart(stream, {})
+  await showDisplayMedia(stream, video)
+  // make this button invisible after recording starts
+  recordStartButton.style.display = 'none'
+  recordStopButton.style.display = 'inline'
+})
 
-function stopShowingDisplayMedia(video) {
+recordStopButton.addEventListener('click', () => {
   const stream = video.srcObject
   stopDisplayMedia(stream)
-  video.srcObject = null
-  return video
-}
+  stopShowingDisplayMedia(video)
+  // make this button invisible after recording stops
+  recordStopButton.style.display = 'none'
+  recordStartButton.style.display = 'inline'
+})

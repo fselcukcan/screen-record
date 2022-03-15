@@ -1,17 +1,15 @@
 
-export function recordStart(video, { mimeType = "video/webm" }) {
-  var stream = video.srcObject;
+export function recordStart(stream, { mimeType = "video/webm" }) {
   const mediaRecorder = new MediaRecorder(stream, { mimeType });
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.start();
+  return mediaRecorder
 }
 
 function handleDataAvailable(event) {
-  console.log("data-available");
   let recordedChunks = [];
   if (event.data.size > 0) {
     recordedChunks.push(event.data);
-    console.log(recordedChunks);
     download(recordedChunks, {});
   } else {
     // ...
@@ -31,4 +29,8 @@ function download(recordedChunks, { mimeType = "video/webm" }) {
   a.download = "test.webm";
   a.click();
   window.URL.revokeObjectURL(url);
+}
+
+export function recordStop(video) {
+
 }
